@@ -18,15 +18,20 @@ class TokenService (
     fun generateToken(authentication: Authentication): String{
         val now: Instant = Instant.now()
 
-        val scope: String = authentication.authorities.toList().joinToString(" ") { it.authority }
-
+        val roles: List<String> = authentication.authorities.map {
+            if (it.authority.startsWith("ROLE_")) it.authority else "ROLE_${it.authority}"
+        }
+        
         val claims: JwtClaimsSet = JwtClaimsSet.builder()
             .issuer("self")
             .issuedAt(now)
             .expiresAt(now.plus(1, ChronoUnit.DAYS))
             .subject(authentication.name)
-            .claim("scope", scope)
+            .claim("roles", roles)
             .build()
+
+        println("Generated JWT claims: ")
+        println("Roles: ${claims.claims["roles"]}")
 
         return encoder.encode(JwtEncoderParameters.from(claims)).tokenValue
     }

@@ -1,7 +1,9 @@
 package ch.edutrack.api
 
 import ch.edutrack.api.config.RsaKeyProperties
+import ch.edutrack.api.model.RoleEntity
 import ch.edutrack.api.model.UserEntity
+import ch.edutrack.api.repository.RoleRepository
 import ch.edutrack.api.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationRunner
@@ -17,9 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class EdutrackApiApplication {
 
     @Bean
-    fun createAdminUser(userRepository: UserRepository, passwordEncoder: PasswordEncoder): ApplicationRunner {
+    fun createAdminUser(userRepository: UserRepository, roleRepository: RoleRepository, passwordEncoder: PasswordEncoder): ApplicationRunner {
         return ApplicationRunner {
             val hashedPassword = passwordEncoder.encode("password")
+
+            val adminRole = roleRepository.findByName("ADMIN") ?: roleRepository.save(RoleEntity(name = "ADMIN"))
 
             // Prevent duplicate admin users
             if (userRepository.findByUsername("admin") == null) {
@@ -29,7 +33,7 @@ class EdutrackApiApplication {
                     email = "admin@example.com",
                     firstName = "Admin",
                     lastName = "Admin",
-                    role = "ADMIN"
+                    roles = mutableSetOf(adminRole) // Properly assigns role
                 )
                 userRepository.save(user)
                 println("Admin user created successfully!")

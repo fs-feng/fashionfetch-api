@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class AuthController (
     private val tokenService: TokenService,
-    private final val authenticationManager: AuthenticationManager,
+    private val authenticationManager: AuthenticationManager,
 ) {
 
     companion object {
@@ -28,6 +28,7 @@ class AuthController (
                 userLogin.username,
                 userLogin.password
         ))
+        LOG.info("User '{}' authenticated with roles: {}", auth.name, auth.authorities)
 
         return tokenService.generateToken(auth)
 
