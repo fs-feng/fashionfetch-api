@@ -33,6 +33,7 @@ class EdutrackApiApplication {
                     email = "admin@example.com",
                     firstName = "Admin",
                     lastName = "Admin",
+                    isActive = true,
                     roles = mutableSetOf(adminRole) // Properly assigns role
                 )
                 userRepository.save(user)

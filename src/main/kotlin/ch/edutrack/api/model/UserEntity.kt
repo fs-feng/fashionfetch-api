@@ -26,8 +26,16 @@ class UserEntity (
     @Column(nullable = false) // maybe unique?
     var email: String,
 
-    var firstName: String,
-    var lastName: String,
+    @Column(nullable = true)
+    var firstName: String? = null,
+
+    @Column(nullable = true)
+    var lastName: String? = null,
+
+    @Column(nullable = true)
+    var isActive: Boolean = true,
+
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -36,4 +36,5 @@ class JwtConfig (
 
         return NimbusJwtEncoder(jwks)
     }
+
 }
