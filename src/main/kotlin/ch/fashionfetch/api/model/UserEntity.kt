@@ -35,8 +35,6 @@ class UserEntity (
     @Column(nullable = true)
     var isActive: Boolean = true,
 
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
@@ -44,6 +42,14 @@ class UserEntity (
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
     var roles: MutableSet<RoleEntity> = HashSet(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_favorites",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "product_id")]
+    )
+    var favorites: MutableSet<ProductEntity> = mutableSetOf()
 ) {
 
 }

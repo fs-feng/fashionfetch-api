@@ -12,9 +12,11 @@ class ScraperController(
     private val webScraper: WebScraper
 ) {
 
+    // only scrape first page (32 products)
     @GetMapping("/acne/men")
     fun getMenPage(): List<ScrapedProductDto> = webScraper.fetchSinglePage()
 
+    // scrape all men clothing
     @GetMapping("/acne/men/all")
     fun getAllMenProducts(): List<ScrapedProductDto> = webScraper.fetchAllMenProducts()
 }

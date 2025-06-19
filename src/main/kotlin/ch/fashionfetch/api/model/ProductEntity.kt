@@ -23,14 +23,13 @@ data class ProductEntity(
 
     val brand: String,
 
-    @ElementCollection
-    @CollectionTable(name = "product_colors", joinColumns = [JoinColumn(name = "product_id")])
-    @Enumerated(EnumType.STRING)
-    val colors: Set<Color> = emptySet(),
+    val colors: String,
+
+    val type: String,
 
     @Enumerated(EnumType.STRING)
-    val type: TableType,
+    val gender: Gender,
 
-    @Enumerated(EnumType.STRING)
-    val gender: Gender
+    @Column(name = "product_url", unique = false, nullable = true)
+    val url: String
 )

@@ -1,8 +1,12 @@
 package ch.fashionfetch.api.service
 
 import ch.fashionfetch.api.dto.ScrapedProductDto
+import ch.fashionfetch.api.mapper.ProductMapper
+import ch.fashionfetch.api.model.ProductEntity
+import ch.fashionfetch.api.repository.ProductRepository
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -10,6 +14,9 @@ import java.util.UUID
 class WebScraper {
 
     private val baseUrl = "https://www.acnestudios.com"
+
+    @Autowired
+    lateinit var productRepository: ProductRepository
 
     fun fetchSinglePage(): List<ScrapedProductDto> {
         val url = "$baseUrl/ch/en/man/clothing/"
@@ -30,8 +37,16 @@ class WebScraper {
             ?.groupValues?.get(1)?.toIntOrNull() ?: -1
 
         val products = extractProductsFromPage(doc)
+        val saved = mutableListOf<ProductEntity>()
+        println("Parsed ${products.size} products.")
+        for (dto in products) {
+            if (!productRepository.existsByUrl(dto.url)) {
+                val entity = ProductMapper.toEntity(dto)
+                saved += productRepository.save(entity)
+            }
+        }
 
-        println("Parsed ${products.size} of $totalCount available products.")
+        println("Saved ${saved.size} new products.")
         return products
     }
 
@@ -51,7 +66,7 @@ class WebScraper {
                 .find(gaData)?.groupValues?.get(1)?.toFloatOrNull() ?: 0f
 
             val color = Regex("\"color\"\\s*:\\s*\"(.*?)\"")
-                .find(gaData)?.groupValues?.get(1)
+                .find(gaData)?.groupValues?.get(1).toString()
 
             val category = Regex("\"item_category\"\\s*:\\s*\"(.*?)\"")
                 .find(gaData)?.groupValues?.get(1) ?: "unknown"
@@ -87,7 +102,8 @@ class WebScraper {
                 type = category2.lowercase(),
                 type_category = category3,
                 brand = "Acne Studios",
-                images = imageUrls
+                images = imageUrls,
+                url = productUrl
             )
         }
     }

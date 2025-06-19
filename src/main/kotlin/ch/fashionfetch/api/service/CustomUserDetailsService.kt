@@ -1,5 +1,6 @@
 package ch.fashionfetch.api.service
 
+import ch.fashionfetch.api.config.CustomUserDetails
 import ch.fashionfetch.api.repository.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -18,10 +19,6 @@ class CustomUserDetailsService(
 
         val authorities = user.roles.map { role -> SimpleGrantedAuthority(role.name) }.toSet()
 
-        return User
-            .withUsername(user.username)
-            .password(user.password)
-            .authorities(authorities)
-            .build()
+        return CustomUserDetails(user)
     }
 }
