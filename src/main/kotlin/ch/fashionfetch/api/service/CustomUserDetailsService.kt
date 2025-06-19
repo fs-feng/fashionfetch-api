@@ -1,6 +1,6 @@
-package ch.edutrack.api.service
+package ch.fashionfetch.api.service
 
-import ch.edutrack.api.repository.UserRepository
+import ch.fashionfetch.api.repository.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails

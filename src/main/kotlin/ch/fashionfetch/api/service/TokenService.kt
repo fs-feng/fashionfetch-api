@@ -1,4 +1,4 @@
-package ch.edutrack.api.service
+package ch.fashionfetch.api.service
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority

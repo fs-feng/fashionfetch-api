@@ -1,7 +1,7 @@
-package ch.edutrack.api.controller
+package ch.fashionfetch.api.controller
 
-import ch.edutrack.api.dto.LoginRequest
-import ch.edutrack.api.service.TokenService
+import ch.fashionfetch.api.dto.LoginRequest
+import ch.fashionfetch.api.service.TokenService
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

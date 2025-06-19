@@ -1,4 +1,4 @@
-package ch.edutrack.api.model
+package ch.fashionfetch.api.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

@@ -1,6 +1,6 @@
-package ch.edutrack.api.repository
+package ch.fashionfetch.api.repository
 
-import ch.edutrack.api.model.RoleEntity
+import ch.fashionfetch.api.model.RoleEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface RoleRepository : JpaRepository<RoleEntity, Long> {

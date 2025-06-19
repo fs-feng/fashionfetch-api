@@ -1,4 +1,4 @@
-package ch.edutrack.api.config
+package ch.fashionfetch.api.config
 
 import com.nimbusds.jose.jwk.JWK
 import com.nimbusds.jose.jwk.JWKSet

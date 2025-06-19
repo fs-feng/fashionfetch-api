@@ -1,10 +1,10 @@
-package ch.edutrack.api
+package ch.fashionfetch.api
 
-import ch.edutrack.api.config.RsaKeyProperties
-import ch.edutrack.api.model.RoleEntity
-import ch.edutrack.api.model.UserEntity
-import ch.edutrack.api.repository.RoleRepository
-import ch.edutrack.api.repository.UserRepository
+import ch.fashionfetch.api.config.RsaKeyProperties
+import ch.fashionfetch.api.model.RoleEntity
+import ch.fashionfetch.api.model.UserEntity
+import ch.fashionfetch.api.repository.RoleRepository
+import ch.fashionfetch.api.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @EnableConfigurationProperties(RsaKeyProperties::class)
 @SpringBootApplication
-class EdutrackApiApplication {
+class FashionFetchApiApplication {
 
     @Bean
     fun createAdminUser(userRepository: UserRepository, roleRepository: RoleRepository, passwordEncoder: PasswordEncoder): ApplicationRunner {
@@ -46,5 +46,5 @@ class EdutrackApiApplication {
 }
 
 fun main(args: Array<String>) {
-    runApplication<EdutrackApiApplication>(*args)
+    runApplication<FashionFetchApiApplication>(*args)
 }

@@ -1,4 +1,4 @@
-package ch.edutrack.api.config
+package ch.fashionfetch.api.config
 
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component

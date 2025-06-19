@@ -1,10 +1,10 @@
-package ch.edutrack.api
+package ch.fashionfetch.api
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class EdutrackApiApplicationTests {
+class FashionFetchApiApplicationTests {
 
     @Test
     fun contextLoads() {

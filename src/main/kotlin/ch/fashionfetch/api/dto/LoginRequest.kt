@@ -1,4 +1,4 @@
-package ch.edutrack.api.dto
+package ch.fashionfetch.api.dto
 
 data class LoginRequest(
     val username: String,

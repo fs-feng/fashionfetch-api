@@ -1,6 +1,6 @@
-package ch.edutrack.api.config
+package ch.fashionfetch.api.config
 
-import ch.edutrack.api.service.CustomUserDetailsService
+import ch.fashionfetch.api.service.CustomUserDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager

@@ -1,6 +1,6 @@
-package ch.edutrack.api.repository
+package ch.fashionfetch.api.repository
 
-import ch.edutrack.api.model.UserEntity
+import ch.fashionfetch.api.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
