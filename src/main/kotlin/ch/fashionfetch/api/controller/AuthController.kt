@@ -27,7 +27,7 @@ class AuthController (
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(AuthController::class.java)
     }
-    /**
+
     @GetMapping("/me")
     fun me(authentication: Authentication?): ResponseEntity<*> {
         if (authentication == null || !authentication.isAuthenticated) {
@@ -63,6 +63,4 @@ class AuthController (
 
         return ResponseEntity.ok(mapOf("message" to "Login successful"))
     }
-    **/
-
 }
