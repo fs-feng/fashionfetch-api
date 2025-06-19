@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/auth")
 class AuthController (
     private val tokenService: TokenService,
     private val authenticationManager: AuthenticationManager,
@@ -25,8 +27,8 @@ class AuthController (
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(AuthController::class.java)
     }
-
-    @GetMapping("/api/auth/me")
+    /**
+    @GetMapping("/me")
     fun me(authentication: Authentication?): ResponseEntity<*> {
         if (authentication == null || !authentication.isAuthenticated) {
             return ResponseEntity.status(401).body(mapOf("error" to "Unauthorized"))
@@ -40,7 +42,7 @@ class AuthController (
         )
     }
 
-    @GetMapping("/api/auth/logout")
+    @GetMapping("/logout")
     fun logout(response: HttpServletResponse): ResponseEntity<Map<String, String>> {
         response.addHeader(
             "Set-Cookie",
@@ -61,5 +63,6 @@ class AuthController (
 
         return ResponseEntity.ok(mapOf("message" to "Login successful"))
     }
+    **/
 
 }

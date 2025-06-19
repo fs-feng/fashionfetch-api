@@ -19,7 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(jsr250Enabled = true)
 class SecurityConfig (
     private val userDetailService: CustomUserDetailsService
 ) {
@@ -60,16 +59,14 @@ class SecurityConfig (
             .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .csrf { it.disable() }
             .authorizeHttpRequests { auth -> auth
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/home").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             }
             .oauth2ResourceServer { auth ->
                 auth.jwt { jwt ->
                     jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())
-                    jwt.decoder(jwtDecoder) // ✅ Make sure Spring decodes JWT properly
+                    jwt.decoder(jwtDecoder)
                 }
-                auth.bearerTokenResolver(tokenResolver) // ✅ Correct way to set custom token resolver
+                auth.bearerTokenResolver(tokenResolver)
             }
             .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .userDetailsService(userDetailService)
