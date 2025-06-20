@@ -18,14 +18,6 @@ class WebScraper {
     @Autowired
     lateinit var productRepository: ProductRepository
 
-    fun fetchSinglePage(): List<ScrapedProductDto> {
-        val url = "$baseUrl/ch/en/man/clothing/"
-        val doc = Jsoup.connect(url)
-            .userAgent("Mozilla/5.0")
-            .get()
-
-        return extractProductsFromPage(doc)
-    }
 
     fun fetchAllMenProducts(): List<ScrapedProductDto> {
         val url = "$baseUrl/ch/en/man/clothing/?sz=9999"
@@ -38,17 +30,39 @@ class WebScraper {
 
         val products = extractProductsFromPage(doc)
         val saved = mutableListOf<ProductEntity>()
-        println("Parsed ${products.size} products.")
+        println("Parsed ${products.size} men's products.")
         for (dto in products) {
             if (!productRepository.existsByUrl(dto.url)) {
                 val entity = ProductMapper.toEntity(dto)
                 saved += productRepository.save(entity)
             }
         }
-
-        println("Saved ${saved.size} new products.")
+        println("Saved ${saved.size} new men's products.")
         return products
     }
+
+    fun fetchAllWomenProducts(): List<ScrapedProductDto> {
+        val url = "$baseUrl/ch/en/woman/clothing/?sz=9999"
+        val doc = Jsoup.connect(url)
+            .userAgent("Mozilla/5.0")
+            .get()
+
+        val totalCount = Regex("Showing \\d+ of (\\d+)").find(doc.text())
+            ?.groupValues?.get(1)?.toIntOrNull() ?: -1
+
+        val products = extractProductsFromPage(doc)
+        val saved = mutableListOf<ProductEntity>()
+        println("Parsed ${products.size} women's products.")
+        for (dto in products) {
+            if (!productRepository.existsByUrl(dto.url)) {
+                val entity = ProductMapper.toEntity(dto.copy(type = "women")) // Set type tag
+                saved += productRepository.save(entity)
+            }
+        }
+        println("Saved ${saved.size} new women's products.")
+        return products
+    }
+
 
     private fun extractProductsFromPage(doc: Document): List<ScrapedProductDto> {
         return doc.select(".product-tile").mapNotNull { element ->

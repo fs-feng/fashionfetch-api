@@ -12,11 +12,19 @@ class ScraperController(
     private val webScraper: WebScraper
 ) {
 
-    // only scrape first page (32 products)
-    @GetMapping("/acne/men")
-    fun getMenPage(): List<ScrapedProductDto> = webScraper.fetchSinglePage()
-
     // scrape all men clothing
     @GetMapping("/acne/men/all")
     fun getAllMenProducts(): List<ScrapedProductDto> = webScraper.fetchAllMenProducts()
+
+    // scrape all women clothing
+    @GetMapping("/acne/women/all")
+    fun getAllWomenProducts(): List<ScrapedProductDto> = webScraper.fetchAllWomenProducts()
+
+    // scrape and save all gender clothing
+    @GetMapping("/acne/all")
+    fun getAllProducts(): List<ScrapedProductDto> {
+        val womenProducts = webScraper.fetchAllWomenProducts()
+        val menProducts = webScraper.fetchAllMenProducts()
+        return womenProducts + menProducts
+    }
 }

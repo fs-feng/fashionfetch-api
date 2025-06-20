@@ -10,7 +10,7 @@ class ProductController(
     private val productRepository: ProductRepository
 ) {
 
-    @GetMapping
+    @GetMapping("/all")
     fun getAllProducts(): List<ProductEntity> {
         return productRepository.findAll()
     }
